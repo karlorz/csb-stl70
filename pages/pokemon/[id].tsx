@@ -31,7 +31,7 @@ export default function Pokemon() {
           image={pokemon.sprites?.other?.["official-artwork"]?.front_default}
           weight={pokemon.weight}
           xp={pokemon.base_experience}
-          abilities={pokemon.abilities?.map((item) => item.ability.name)}
+          abilities={pokemon.abilities?.map((item: { ability: { name: string } }) => item.ability.name)}
         />
       </div>
     );
@@ -69,8 +69,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
+  const pokemonIDs = ["caterpie", "doduo"]; // Add the desired IDs here
+
+  const getPaths = pokemonIDs.map((id) => ({ params: { id } }));
   return {
-    paths: [],
+    paths: getPaths,
     fallback: false
     // fallback: "blocking"
   };
