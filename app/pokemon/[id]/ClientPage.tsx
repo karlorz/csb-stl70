@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React from "react";
 import axios from "axios";
 import { useQuery, QueryClientProvider } from "react-query";
@@ -7,7 +7,9 @@ import { QueryClient } from "react-query";
 import PokemonCard from "../../../components/PokemonCard";
 
 const fetchPokemon = (id: string) =>
-  axios.get(`https://pokeapi.co/api/v2/pokemon/${id}/`).then(({ data }) => data);
+  axios
+    .get(`https://pokeapi.co/api/v2/pokemon/${id}/`)
+    .then(({ data }) => data);
 
 interface ClientPageProps {
   pokemonID: string;
@@ -16,10 +18,12 @@ interface ClientPageProps {
 export default function ClientPage({ pokemonID }: ClientPageProps) {
   const queryClient = new QueryClient();
 
-  const { isSuccess, data: pokemon, isLoading, isError } = useQuery(
-    ["getPokemon", pokemonID],
-    () => fetchPokemon(pokemonID)
-  );
+  const {
+    isSuccess,
+    data: pokemon,
+    isLoading,
+    isError,
+  } = useQuery(["getPokemon", pokemonID], () => fetchPokemon(pokemonID));
 
   React.useEffect(() => {
     return () => {
