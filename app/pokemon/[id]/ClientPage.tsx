@@ -2,7 +2,7 @@
 
 import React from "react";
 import axios from "axios";
-import { useQuery, QueryClientProvider, QueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import PokemonCard from "@/components/PokemonCard";
 
 const fetchPokemon = (id: string) =>
@@ -15,13 +15,6 @@ interface ClientPageProps {
 }
 
 export default function ClientPage({ pokemonID }: ClientPageProps) {
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        queryFn: () => fetchPokemon(pokemonID),
-      },
-    },
-  })
 
   const {
     data: pokemon,
@@ -30,14 +23,15 @@ export default function ClientPage({ pokemonID }: ClientPageProps) {
   } = useQuery({
     queryKey: ["getPokemon", pokemonID],
     queryFn: () => fetchPokemon(pokemonID),
+    staleTime: 10 * 1000,
   });
 
-  React.useEffect(() => {
-    return () => {
-      queryClient.clear();
-      queryClient.removeQueries({queryKey:["getPokemon", pokemonID]});
-    };
-  }, [pokemonID, queryClient]);
+  // React.useEffect(() => {
+  //   return () => {
+  //     queryClient.clear();
+  //     queryClient.removeQueries({queryKey:["getPokemon", pokemonID]});
+  //   };
+  // }, [pokemonID, queryClient]);
 
   if (isLoading) {
     return <div className="center">Loading...</div>;

@@ -28,11 +28,11 @@ const fetchPokemon = (id: string) =>
     .get(`https://pokeapi.co/api/v2/pokemon/${id}/`)
     .then(({ data }) => data);
 
-export default function PokemonPage({ params }: PokemonID) {
+export default async function PokemonPage({ params }: PokemonID) {
   const pokemonID = params.id;
   const queryClient = new QueryClient();
 
-  queryClient.prefetchQuery({
+  await queryClient.prefetchQuery({
     queryKey: ["getPokemon", pokemonID],
     queryFn: () => fetchPokemon(pokemonID),
   });
