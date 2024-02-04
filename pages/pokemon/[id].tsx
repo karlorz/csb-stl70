@@ -71,9 +71,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
 export const getStaticPaths: GetStaticPaths = async () => {
   const pokemonIDs = ["caterpie", "doduo"]; // Add the desired IDs here
 
-  const getPaths = pokemonIDs.map((id) => ({ params: { id } }));
+  const paths = pokemonIDs.map((id) => ({ params: { id } }));
   return {
-    paths: getPaths,
+    paths,
     fallback: false
     // fallback: "blocking"
   };
