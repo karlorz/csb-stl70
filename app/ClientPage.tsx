@@ -1,5 +1,6 @@
-"use client";
-import { useQuery } from "react-query";
+"use client"
+
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import React from "react";
 import useDebounce from "../utils/useDebounce";
 import searchPokemons from "../utils/searchPokemons";
@@ -7,15 +8,14 @@ import PokemonsSearchResult from "../components/PokemonsSearchResult";
 
 export default function ClientPage() {
   const [searchValue, setSearchValue] = React.useState("");
-  const debounedSearchValue = useDebounce(searchValue, 300);
+  const debouncedSearchValue = useDebounce(searchValue, 300);
+  const queryClient = useQueryClient();
 
-  const { isLoading, isError, isSuccess, data } = useQuery(
-    ["searchPokemons", debounedSearchValue],
-    () => searchPokemons(debounedSearchValue),
-    {
-      enabled: debounedSearchValue.length > 0
-    }
-  );
+  const { isLoading, isError, isSuccess, data } = useQuery({
+    queryKey: ["searchPokemons", debouncedSearchValue],
+    queryFn: () => searchPokemons(debouncedSearchValue),
+    enabled: debouncedSearchValue.length > 0,
+  });
 
   const renderResult = () => {
     if (isLoading) {

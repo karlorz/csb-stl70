@@ -1,7 +1,12 @@
-"use client"
+"use client";
 import React from "react";
-import { QueryClient, QueryClientProvider, Hydrate, dehydrate } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools";
+import {
+  QueryClient,
+  QueryClientProvider,
+  HydrationBoundary,
+  dehydrate,
+} from "@tanstack/react-query";
+
 import "../styles.css";
 
 export default function ClientLayout({
@@ -13,10 +18,9 @@ export default function ClientLayout({
   return (
     // Provide the client to your App
     <QueryClientProvider client={queryClient}>
-      <Hydrate state={dehydrate(queryClient)}>
+      <HydrationBoundary state={dehydrate(queryClient)}>
         {children}
-        <ReactQueryDevtools initialIsOpen={false} />
-      </Hydrate>
+      </HydrationBoundary>
     </QueryClientProvider>
   );
 }
