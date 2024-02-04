@@ -26,13 +26,6 @@ export default function ClientPage({ pokemonID }: ClientPageProps) {
     staleTime: 10 * 1000,
   });
 
-  // React.useEffect(() => {
-  //   return () => {
-  //     queryClient.clear();
-  //     queryClient.removeQueries({queryKey:["getPokemon", pokemonID]});
-  //   };
-  // }, [pokemonID, queryClient]);
-
   if (isLoading) {
     return <div className="center">Loading...</div>;
   }

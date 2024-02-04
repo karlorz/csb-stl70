@@ -1,3 +1,5 @@
+import axios from "axios";
+
 import {
   dehydrate,
   HydrationBoundary,
@@ -20,8 +22,6 @@ type PokemonID = {
     id: string;
   };
 };
-
-import axios from "axios";
 
 const fetchPokemon = (id: string) =>
   axios
